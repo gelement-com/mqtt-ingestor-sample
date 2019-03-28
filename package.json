@@ -1,0 +1,15 @@
+{
+  "name": "mqtt-ingestor-sample",
+  "version": "1.0.0",
+  "description": "Sample program to send data to MQTT Ingestor",
+  "main": "index.js",
+  "dependencies": {
+    "mqtt": "^2.18.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "sample1": "node sample1/publish.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
