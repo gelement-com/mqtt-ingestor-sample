@@ -23,7 +23,7 @@ Format: Array
 
 ## Run the sample
 1. Before running the sample, configure the script to use your api-key and secret.
-   * Go to <https://ems.senfi.io/cms/integration> to get your ```apiKey``` and ```secretKey```
+   * Go to <https://ems.senfi.io/cms/developer> to get your ```apiKey``` and ```secretKey```
    * Replace ```apiKey``` and ```secretKey``` on Line 1 and Line 2 of [sample1/publish.js](sample1/publish.js)
 2. Configure which measurement to send data to
    * Go to <https://ems.senfi.io/cms/measurement> to get ```Measurement Code```
