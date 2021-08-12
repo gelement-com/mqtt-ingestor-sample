@@ -11,7 +11,7 @@ const apiMinorVersion = 0;
 const dataType = "live"; // live | backlog
 const encoding = "text"; // text | gzip
 const formatType = "array"; // array | normalized
-const mqttHostname = "mqtt.dev.senfi.io";
+const mqttHostname = "mqtt.senfi.io";
 const mqttPort = 1883;
 
 // Fill in the measurement code
