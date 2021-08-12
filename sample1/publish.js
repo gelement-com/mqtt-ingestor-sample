@@ -20,6 +20,7 @@ const measurementCode = "<your measurement code>"; // Obtained after creating a 
 // Example topic - `ingestor/2/0/live/text/array/941908ba3f5de353/ge_temp_v1`;
 const topic = `ingestor/${apiMajorVersion}/${apiMinorVersion}/${dataType}/${encoding}/${formatType}/${apiKey}/${measurementCode}`;
 
+// Sample data. Data should be obtained from a device before formatting to json and send to Senfi
 let message = {
 	data: [
 		{
