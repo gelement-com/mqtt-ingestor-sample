@@ -1,58 +1,66 @@
-let apiKey = '941908ba3f5de353';
-let secretKey = '268a4653-d0f6f15f-1cb02053-6a18fc62-95b754f5-cd7f47b2-80a7cddb-05b69b9c';
-let mqttHostname = 'mqtt.senfi.io';
-let mqttPort = 1883;
+// import mqtt package
+const mqtt = require("mqtt");
 
-let apiMajorVersion = 1;
-let apiMinorVersion = 0;
-let dataType = 'live'; // live | backlog
-let encoding = 'text'; // text | gzip
-let formatType = 'array'; // array | normalized
-let namespace = 'ems';
-let measurement = 'ge_temp_v1';
+// Fill in the integration and secret key from Senfi
+const apiKey = "<your integration key>";
+const secretKey = "<your secret key>";
 
-// topic = `ingestor/1/0/live/text/array/ems/941908ba3f5de353/ge_temp_v1`;
-let topic = `ingestor/${apiMajorVersion}/${apiMinorVersion}/${dataType}/${encoding}/${formatType}/${namespace}/${apiKey}/${measurement}`;
+// Values that must be provided
+const apiMajorVersion = 2;
+const apiMinorVersion = 0;
+const dataType = "live"; // live | backlog
+const encoding = "text"; // text | gzip
+const formatType = "array"; // array | normalized
+const mqttHostname = "mqtt.senfi.io";
+const mqttPort = 1883;
 
+// Fill in the measurement code
+const measurementCode = "<your measurement code>"; // Obtained after creating a measurement in Senfi. Example - sensor_v1
+
+// Example topic - `ingestor/2/0/live/text/array/941908ba3f5de353/ge_temp_v1`;
+const topic = `ingestor/${apiMajorVersion}/${apiMinorVersion}/${dataType}/${encoding}/${formatType}/${apiKey}/${measurementCode}`;
+
+// Sample data. Data should be obtained from a device before formatting to json and send to Senfi
 let message = {
-  "data": [
-    {
-      "tm_source": new Date().getTime(),
-      "lsid": "KCAY-AWK",
-      "country": "SG",
-      "temp": 50
-    },
-    {
-      "tm_source": new Date().getTime(),
-      "lsid": "EDVA-HJB",
-      "country": "SG",
-      "temp": 60
-    }
-  ]
-};
+	data: [
+		{
+			tm_source: new Date().getTime(),
+			site_id: 0,
+			// Example tags
+			sensor_id: 0,
+			country: "SG",
 
-const mqtt = require('mqtt');
+			// Example metrics
+			temperature: 19,
+			humidity: 90,
+			dust: 10,
+			voc: 19,
+			co2: 44,
+			co: 30,
+			pressure: 1008,
+			ozone: 8
+		}
+	]
+};
 
 //Connects to MQTT Server
 let mqttClient = mqtt.connect({
-  username: apiKey,
-  password: secretKey,
-  host: mqttHostname,
-  port: mqttPort,
-  clean: true
+	username: apiKey,
+	password: secretKey,
+	host: mqttHostname,
+	port: mqttPort,
+	clean: true
 });
 
-mqttClient.on('connect', function () {
-  //publish data to MQTT Server
-  mqttClient.publish(topic, JSON.stringify(message), {qos: 2}, function (err) {
-    if(err)
-      console.log('error publishing data. Error:', err);
-    else
-      console.log('measurement data published');
+mqttClient.on("connect", function () {
+	//publish data to MQTT Server
+	mqttClient.publish(topic, JSON.stringify(message), { qos: 2 }, function (err) {
+		if (err) console.log("error publishing data. Error:", err);
+		else console.log("measurement data published");
 
-    mqttClient.end();
-  });
+		mqttClient.end();
+	});
 });
-mqttClient.on('error', function (err) {
-  console.log('MQTT encountered error. Exiting application.... \n Error:', err);
+mqttClient.on("error", function (err) {
+	console.log("MQTT encountered error. Exiting application.... \n Error:", err);
 });
