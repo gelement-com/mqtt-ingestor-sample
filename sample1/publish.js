@@ -25,7 +25,6 @@ let message = {
 	data: [
 		{
 			tm_source: new Date().getTime(),
-			site_id: 0,
 			// Example tags
 			sensor_id: 0,
 			country: "SG",
